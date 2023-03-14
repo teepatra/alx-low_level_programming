@@ -1,5 +1,6 @@
 #include "main.h"
 #include <stdlib.h>
+/* #include <stdio.h> */
 
 /**
  * _strdup - The function that returns a pointer to a newly allocated string.
