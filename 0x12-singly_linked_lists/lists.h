@@ -8,8 +8,10 @@
  * @next: points to the next node
  *
  * Description: singly linked list node structure
- * for Holberton project
+ * for Holberton projec
  */
+#include <stdlib.h>
+
 typedef struct list_s
 {
 	char *str;
