@@ -1,44 +1,84 @@
 #!/usr/bin/python3
+"""
+returns the perimeter of the island described in grid
+"""
 
 
 def island_perimeter(grid):
-    """ Function that returns detail of a grid"""
+    """returns the perimeter of the island"""
 
-    if not isinstance(grid, list) or not len(grid):
-        return 0
-    y = len(grid) - 1
-    x = len(grid[0]) - 1
+    row = len(grid)
+    col = len(grid[0])
+    total = 0
 
-    prim = 0
-
-    for h in range(y):
-        for r in range(x):
-            if grid[h][r] == 1:
-                prim += check_surround(grid, h, r)
-    return prim
-
-
-def check_surround(grid, row, idx):
-    """ Function that checks the surroundings of a given tile
-    """
-    height = len(grid)
-    length = len(grid[0])
-    sur = [0, 0, 0, 0]
-
-    if row - 1 >= 0:  # up
-        if not grid[row - 1][idx]:
-            sur[0] = 1
-
-    if row + 1 < height:  # down
-        if not grid[row + 1][idx]:
-            sur[1] = 1
-
-    if idx - 1 >= 0:  # left
-        if not grid[row][idx - 1]:
-            sur[2] = 1
-
-    if idx + 1 < length:  # right
-        if not grid[row][idx + 1]:
-            sur[3] = 1
-
-    return sum(sur)
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] == 1:
+                if i == 0:
+                    if j == 0:
+                        if grid[i][j+1] + grid[i+1][j] == 1:
+                            total += 3
+                        elif grid[i][j+1] + grid[i+1][j] == 2:
+                            total += 2
+                        else:
+                            total += 2
+                    elif j == len(grid[0]) - 1:
+                        if grid[i][j-1] + grid[i+1][j] == 1:
+                            total += 3
+                        else:
+                            total += 2
+                    else:
+                        if grid[i][j+1] + grid[i][j-1] + grid[i+1][j] == 1:
+                            total += 3
+                        elif grid[i][j+1] + grid[i][j-1] + grid[i+1][j] == 2:
+                            total += 2
+                        else:
+                            total += 1
+                elif i == len(grid) - 1:
+                    if j == 0:
+                        if grid[i][j+1] + grid[i-1][j] == 1:
+                            total += 3
+                        else:
+                            total += 2
+                    elif j == len(grid[0]) - 1:
+                        if grid[i][j-1] + grid[i-1][j] == 1:
+                            total += 3
+                        else:
+                            total += 2
+                    else:
+                        if grid[i][j-1] + grid[i][j+1] + grid[i-1][j] == 1:
+                            total += 3
+                        elif grid[i][j-1] + grid[i][j+1] + grid[i-1][j] == 3:
+                            total += 1
+                        else:
+                            total += 2
+                elif j == 0 and i != 0 and i != len(grid) - 1:
+                    if grid[i+1][j] + grid[i-1][j] + grid[i][j+1] == 1:
+                        total += 3
+                    elif grid[i+1][j] + grid[i-1][j] + grid[i][j+1] == 2:
+                        total += 2
+                    else:
+                        total += 1
+                elif j == len(grid[0]) - 1 and i != 0 and i != len(grid) - 1:
+                    if grid[i][j-1] + grid[i-1][j] + grid[i+1][j] == 1:
+                        total += 3
+                    elif grid[i][j-1] + grid[i-1][j] + grid[i+1][j] == 3:
+                        total += 1
+                    else:
+                        total += 2
+                else:
+                    if grid[i+1][j] + grid[i-1][j] +\
+                            grid[i][j-1] + grid[i][j+1] == 1:
+                        total += 3
+                    elif grid[i+1][j] + grid[i-1][j] + grid[i][j-1] +\
+                            grid[i][j+1] == 3:
+                        total += 1
+                    elif grid[i+1][j] + grid[i-1][j] + grid[i][j-1] +\
+                            grid[i][j+1] == 4:
+                        total += 0
+                    elif grid[i+1][j] + grid[i-1][j] + grid[i][j-1] +\
+                            grid[i][j+1] == 0:
+                        total += 4
+                    else:
+                        total += 2
+    return(total)
